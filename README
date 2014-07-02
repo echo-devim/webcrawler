@@ -9,6 +9,7 @@
  Version: 0.1
  
 WebCrawler written in C. This program should be cross-platform, I've only tested it on Linux x86.
+This web crawler don't support ssl.
 
 Attention: The program is an alpha version (i.e. is instable). You can help me reporting crash, thanks.
 
