@@ -1,0 +1,26 @@
+
+ _    _      _     _____                    _   
+| |  | |    | |   /  __ \                  | |  
+| |  | | ___| |__ | /  \/_ __ __ ___      _| | ___ _ __ 
+| |/\| |/ _ \ '_ \| |   | '__/ _` \ \ /\ / / |/ _ \ '__|
+\  /\  /  __/ |_) | \__/\ | | (_| |\ V  V /| |  __/ |   
+ \/  \/ \___|_.__/ \____/_|  \__,_| \_/\_/ |_|\___|_|
+ 
+ Version: 0.1
+ 
+WebCrawler written in C. This program should be cross-platform, I've only tested it on Linux x86.
+
+Attention: The program is an alpha version (i.e. is instable). You can help me reporting crash, thanks.
+
+Compile:
+$ gcc -o webcrawler webcrawler.c http.c
+
+Usage:
+$ ./webcrawler HTTP_TYPE start_page ip port host-name user-agent cookies
+
+Example:
+$ ./webcrawler GET /index.php 111.222.333.444 80 www.domain.com Firefox cookie_key=null_value
+
+ 
+TODO:
+ 	- Implement http tunneling
