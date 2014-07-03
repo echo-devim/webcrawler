@@ -15,6 +15,8 @@ char user_agent[100];
 char cookie[200];
 char stack_page[10000][MAX_URL_LENGTH];
 int pt_stack_page=0;
+char *response;
+int proxy;
 
 char* substring(char* str, char* pattern);
 char* findLink(char *html, char *key, char *link);
@@ -23,6 +25,7 @@ void crawlPage(char *page_url);
 void sanitizeUrl(char **url);
 int checkPage(char *page);
 int checkPageType(char *page);
-char *response;
+char* checkHttpProxy(char *url);
+
 
 #endif

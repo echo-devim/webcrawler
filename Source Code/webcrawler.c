@@ -114,10 +114,23 @@ int checkPageType(char *page){
 	return 0;
 }
 
+char* checkHttpProxy(char *url){
+	if (proxy) { //If proxy is set..
+		char *new_url = (char*)malloc(sizeof(char)*MAX_URL_LENGTH);
+		strcpy(new_url, "http://");
+		strcat(new_url, host);
+		strcat(new_url, url);
+		return new_url;
+	}else{
+		return url;
+	}
+}
+
 void crawlPage(char *page_url){
 	if (checkPageType(page_url)) {
 		strcpy(stack_page[pt_stack_page],page_url);
 		pt_stack_page++;
+		page_url = checkHttpProxy(page_url);
 		char *request = createRequest(http_type, page_url, host, user_agent, cookie);
 		sendRequest(ip, port, request, response);
 		findAllLinks(response);
@@ -125,23 +138,30 @@ void crawlPage(char *page_url){
 }
 
 int main(int argc, char** argv) {
-	if (argc < 8) {
+	if (argc < 10) {
 		printf(
 		" _    _      _     _____                    _   \n"
 		"| |  | |    | |   /  __ \\                  | |  \n"
 		"| |  | | ___| |__ | /  \\/_ __ __ ___      _| | ___ _ __ \n"
 		"| |/\\| |/ _ \\ '_ \\| |   | '__/ _` \\ \\ /\\ / / |/ _ \\ '__|\n"
 		"\\  /\\  /  __/ |_) | \\__/\\ | | (_| |\\ V  V /| |  __/ |   \n"
- 		" \\/  \\/ \\___|_.__/ \\____/_|  \\__,_| \\_/\\_/ |_|\\___|_|             v0.1-Alpha  \n\n"
+ 		" \\/  \\/ \\___|_.__/ \\____/_|  \\__,_| \\_/\\_/ |_|\\___|_|             v0.2-Alpha  \n\n"
  		"Usage:\n"
- 		"$ %s HTTP_TYPE start_page ip port host-name user-agent cookies\n\n"
+ 		"$ %s HTTP_TYPE start_page ip port host-name user-agent cookies proxy_ip proxy_port\n\n"
  		"Example:\n"
- 		"$ %s GET /index.php 111.222.333.444 80 www.domain.com Firefox cookie_key=null_value\n\n"
+ 		"$ %s GET /index.php 111.222.333.444 80 www.domain.com Firefox cookie_key=null_value 0 0\n\n"
 		, argv[0], argv[0]);
 	}else{
 		strcpy(http_type,argv[1]);
-		strcpy(ip,argv[3]);
-		port = atoi(argv[4]);
+		if ((*argv[8]=='0')||(*argv[9]=='0')){
+			strcpy(ip,argv[3]);
+			port = atoi(argv[4]);
+			proxy=0;
+		}else{
+			strcpy(ip,argv[8]);
+			port = atoi(argv[9]);
+			proxy=1;	
+		}
 		strcpy(host,argv[5]);
 		strcpy(user_agent,argv[6]);
 		strcpy(cookie,argv[7]);
