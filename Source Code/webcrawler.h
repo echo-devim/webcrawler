@@ -17,6 +17,7 @@ char stack_page[10000][MAX_URL_LENGTH];
 int pt_stack_page=0;
 char *response;
 int proxy;
+FILE *fp;
 
 char* substring(char* str, char* pattern);
 char* findLink(char *html, char *key, char *link);

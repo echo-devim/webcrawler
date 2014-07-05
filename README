@@ -13,16 +13,18 @@ This web crawler don't support https.
 
 If you don't want use a proxy set the proxy ip and proxy port to 0 (see later).
 
+The last option if set to 'y' will write results on output.txt in the same folder.
+
 Attention: The program is an alpha version (i.e. is instable). You can help me reporting crash, thanks.
 
 Compile:
 $ gcc -o webcrawler webcrawler.c http.c
 
 Usage:
-$ ../webcrawler HTTP_TYPE start_page ip port host-name user-agent cookies proxy_ip proxy_port
+$ ../webcrawler HTTP_TYPE start_page ip port host-name user-agent cookies proxy_ip proxy_port write_file
 
 Example:
-$ ../webcrawler GET /index.php 111.222.333.444 80 www.domain.com Firefox cookie_key=null_value 0 0
+$ ../webcrawler GET /index.php 111.222.333.444 80 www.domain.com Firefox cookie_key=null_value 0 0 y
 
 
  

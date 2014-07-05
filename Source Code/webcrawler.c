@@ -47,13 +47,20 @@ void findAllLinks(char *html){
 	char keys[KEY_ARRAY_SIZE][KEY_SIZE] = {"href=*", "href*=**", "src=*","src*=**"};
 	char *link = (char*)malloc(sizeof(char)*MAX_URL_LENGTH);
 	int i;
+
 	for (i=0; i<KEY_ARRAY_SIZE;i++){
 		char *start = html;
 		do{
 			start = findLink(start, keys[i], link);
 			sanitizeUrl(&link);
 			if ((start!=NULL)&&(*link!='\0')&&(checkPage(link))){
-				printf("%s\n", link);
+				if (fp==NULL){
+					printf("%s\n", link);
+				}else{
+					fprintf(fp,"%s\n", link);
+					printf("Searching.. %d files found\r", pt_stack_page);
+					fflush(stdout);
+				}
 				crawlPage(link);
 			}
 		}while(start!=NULL);
@@ -138,7 +145,7 @@ void crawlPage(char *page_url){
 }
 
 int main(int argc, char** argv) {
-	if (argc < 10) {
+	if (argc < 11) {
 		printf(
 		" _    _      _     _____                    _   \n"
 		"| |  | |    | |   /  __ \\                  | |  \n"
@@ -147,9 +154,9 @@ int main(int argc, char** argv) {
 		"\\  /\\  /  __/ |_) | \\__/\\ | | (_| |\\ V  V /| |  __/ |   \n"
  		" \\/  \\/ \\___|_.__/ \\____/_|  \\__,_| \\_/\\_/ |_|\\___|_|             v0.2-Alpha  \n\n"
  		"Usage:\n"
- 		"$ %s HTTP_TYPE start_page ip port host-name user-agent cookies proxy_ip proxy_port\n\n"
+ 		"$ %s HTTP_TYPE start_page ip port host-name user-agent cookies proxy_ip proxy_port write_file\n\n"
  		"Example:\n"
- 		"$ %s GET /index.php 111.222.333.444 80 www.domain.com Firefox cookie_key=null_value 0 0\n\n"
+ 		"$ %s GET /index.php 111.222.333.444 80 www.domain.com Firefox cookie_key=null_value 0 0 n\n\n"
 		, argv[0], argv[0]);
 	}else{
 		strcpy(http_type,argv[1]);
@@ -162,12 +169,25 @@ int main(int argc, char** argv) {
 			port = atoi(argv[9]);
 			proxy=1;	
 		}
+		if (*argv[10]=='y'){
+			fp = fopen("output.txt", "w");
+			if (fp == NULL)
+			{
+				printf("Error opening file!\n");
+				exit(1);
+			}
+		}else
+			fp=NULL;
 		strcpy(host,argv[5]);
 		strcpy(user_agent,argv[6]);
 		strcpy(cookie,argv[7]);
 		response = (char*)malloc(sizeof(char)*RESPONSE_BUFFER_SIZE);
 		crawlPage(argv[2]);
 		free(response);
+		if (fp!=NULL){
+			printf(" %d files found            \n", pt_stack_page-1);
+			fclose(fp);
+		}
 	}
 	return 0;
 }
