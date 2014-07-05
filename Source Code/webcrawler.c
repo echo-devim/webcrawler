@@ -152,7 +152,7 @@ int main(int argc, char** argv) {
 		"| |  | | ___| |__ | /  \\/_ __ __ ___      _| | ___ _ __ \n"
 		"| |/\\| |/ _ \\ '_ \\| |   | '__/ _` \\ \\ /\\ / / |/ _ \\ '__|\n"
 		"\\  /\\  /  __/ |_) | \\__/\\ | | (_| |\\ V  V /| |  __/ |   \n"
- 		" \\/  \\/ \\___|_.__/ \\____/_|  \\__,_| \\_/\\_/ |_|\\___|_|             v0.2-Alpha  \n\n"
+ 		" \\/  \\/ \\___|_.__/ \\____/_|  \\__,_| \\_/\\_/ |_|\\___|_|             v0.3-Alpha  \n\n"
  		"Usage:\n"
  		"$ %s HTTP_TYPE start_page ip port host-name user-agent cookies proxy_ip proxy_port write_file\n\n"
  		"Example:\n"
