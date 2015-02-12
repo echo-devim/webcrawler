@@ -9,7 +9,7 @@
  Version: 0.3
  
 WebCrawler written in C. This program should be cross-platform, I've only tested it on Linux x86.
-This web crawler don't support https.
+This web crawler doesn't support https.
 
 If you don't want use a proxy set the proxy ip and proxy port to 0 (see later).
 
